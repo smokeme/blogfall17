@@ -8,9 +8,9 @@
 
 	{% for item in post_items %}
 	<ul>
-		<li>{{item.title}}</li>
+		<a href="{{item.get_detail_url}}"><li>{{item.title}}</li>
 		<li>{{item.content}}</li>
-		<li>{{item.id}}</li>
+		<li>{{item.id}}</li></a>
 	</ul>
 	{% endfor %}
 
