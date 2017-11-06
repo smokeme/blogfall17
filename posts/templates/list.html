@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	{% for item in post_items %}
+	<ul>
+		<li>{{item.title}}</li>
+		<li>{{item.content}}</li>
+		<li>{{item.id}}</li>
+	</ul>
+	{% endfor %}
+
+</body>
+</html>
