@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block heading %}
+	Detail
+{% endblock heading %}
+
+{% block content %}
 	<ul>
 		<li>{{item.title}}</li>
 		<li>{{item.content}}</li>
 		<li>{{item.id}}</li>
 	</ul>
-
-</body>
-</html>
+{% endblock content %}
