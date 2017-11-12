@@ -16,6 +16,9 @@
 	<div class="row">
 	{% for item in post_items %}
 		<div class="card col-xs-12 col-md-4" style="width: 20rem;">
+			{% if item.img %}
+				<img class="card-img-top" src="{{item.img.url}}" alt="Card image cap">
+			{% endif %}
 			<div class="card-body">
 				<h4 class="card-title">{{item.title}} <small>{{item.created|timesince}}</small></h4>
 				<p class="card-text">{{item.content|linebreaks|truncatechars:30}}</p>

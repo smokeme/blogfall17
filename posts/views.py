@@ -20,7 +20,7 @@ def post_create(request):
 
 def post_update(request, post_id):
     item = Post.objects.get(id=post_id)
-    form = PostForm(request.POST or None, instance=item)
+    form = PostForm(request.POST or None, request.FILES or None, instance=item)
     if form.is_valid():
         form.save()
         messages.info(request, "Hey, you just changed a blog post!")
@@ -46,7 +46,7 @@ def some_function(request):
 def post_list(request):
     objects = Post.objects.all()
     # objects = Post.objects.all().order_by('title', 'id')
-    paginator = Paginator(objects, 1)
+    paginator = Paginator(objects, 5)
 
     number = request.GET.get('page')
 
