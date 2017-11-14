@@ -22,9 +22,9 @@
 			<div class="card-body">
 				<h4 class="card-title">{{item.title}} <small>{{item.created|timesince}}</small></h4>
 				<p class="card-text">{{item.content|linebreaks|truncatechars:30}}</p>
-				<a href="{% url 'more:detail' post_id=item.id %}" class="btn btn-info">Read More...</a>
-				<a href="{% url 'more:update' post_id=item.id %}" class="btn btn-warning">Update</a>
-				<a href="{% url 'more:delete' post_id=item.id %}" class="btn btn-danger">Delete</a>
+				<a href="{% url 'more:detail' post_slug=item.slug %}" class="btn btn-info">Read More...</a>
+				<a href="{% url 'more:update' post_slug=item.slug %}" class="btn btn-warning">Update</a>
+				<a href="{% url 'more:delete' post_slug=item.slug %}" class="btn btn-danger">Delete</a>
 
 			</div>
 		</div>

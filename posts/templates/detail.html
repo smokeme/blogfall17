@@ -8,5 +8,9 @@
 		<li>{{item.title}}</li>
 		<li>{{item.content}}</li>
 		<li>{{item.id}}</li>
+		{% if item.img %}
+			<li><img src="{{item.img.url}}" alt=""></li>			
+		{% endif %}
+
 	</ul>
 {% endblock content %}

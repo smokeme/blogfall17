@@ -8,7 +8,7 @@ def random(request):
     return render(request, 'random.html')
 
 def post_create(request):
-    form = PostForm(request.POST or None)
+    form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
         messages.success(request, "Awesome, you just added a blog post!")
@@ -18,21 +18,21 @@ def post_create(request):
     }
     return render(request, 'post_create.html', context)
 
-def post_update(request, post_id):
-    item = Post.objects.get(id=post_id)
+def post_update(request, post_slug):
+    item = Post.objects.get(slug=post_slug)
     form = PostForm(request.POST or None, request.FILES or None, instance=item)
     if form.is_valid():
         form.save()
         messages.info(request, "Hey, you just changed a blog post!")
-        return redirect("more:detail", post_id=item.id)
+        return redirect("more:detail", post_slug=item.slug)
     context = {
         "form": form,
         "item":item,
     }
     return render(request, 'post_update.html', context)
 
-def post_delete(request, post_id):
-    Post.objects.get(id=post_id).delete()
+def post_delete(request, post_slug):
+    Post.objects.get(slug=post_slug).delete()
     messages.warning(request, "Noooooooooo!")
     return redirect("more:list")
 
@@ -62,9 +62,8 @@ def post_list(request):
     }
     return render(request, "list.html", context)
 
-def post_detail(request, post_id):
-    # item = Post.objects.get(id=1000)
-    item = get_object_or_404(Post, id=post_id)
+def post_detail(request, post_slug):
+    item = get_object_or_404(Post, slug=post_slug)
     context = {
         "item": item,
     }
