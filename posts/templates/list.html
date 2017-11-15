@@ -15,16 +15,16 @@
 	
 	<div class="row">
 	{% for item in post_items %}
-		<div class="card col-xs-12 col-md-4" style="width: 20rem;">
+		<div class="card col-xs-12 col-md-6" style="width: 20rem;">
 			{% if item.img %}
 				<img class="card-img-top" src="{{item.img.url}}" alt="Card image cap">
 			{% endif %}
 			<div class="card-body">
 				<h4 class="card-title">{{item.title}} <small>{{item.created|timesince}}</small></h4>
 				<p class="card-text">{{item.content|linebreaks|truncatechars:30}}</p>
-				<a href="{% url 'more:detail' post_slug=item.slug %}" class="btn btn-info">Read More...</a>
-				<a href="{% url 'more:update' post_slug=item.slug %}" class="btn btn-warning">Update</a>
-				<a href="{% url 'more:delete' post_slug=item.slug %}" class="btn btn-danger">Delete</a>
+				<a href="{% url 'more:detail' post_slug=item.slug %}" class="btn btn-info">Read More <i class="fa fa-book" aria-hidden="true"></i></a>
+				<a href="{% url 'more:update' post_slug=item.slug %}" class="btn btn-warning">Update <i class="fa fa-pencil" aria-hidden="true"></i></a>
+				<a href="{% url 'more:delete' post_slug=item.slug %}" class="btn btn-danger">Delete <i class="fa fa-trash" aria-hidden="true"></i></a>
 
 			</div>
 		</div>
