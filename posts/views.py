@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
+from .models import Post, Like
 from .forms import PostForm
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from urllib.parse import quote
-from django.http import Http404
+from django.http import Http404, JsonResponse
+from django.utils import timezone
+from django.db.models import Q
 
 
 def random(request):
@@ -15,11 +16,13 @@ def post_create(request):
         raise Http404
     form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-        form.save()
+        hamzas_post = form.save(commit=False)
+        hamzas_post.author = request.user
+        hamzas_post.save()
         messages.success(request, "Awesome, you just added a blog post!")
         return redirect("more:list")
     context = {
-        "form": form
+        "form": form,
     }
     return render(request, 'post_create.html', context)
 
@@ -53,9 +56,23 @@ def some_function(request):
 
 
 def post_list(request):
-    objects = Post.objects.all()
-    # objects = Post.objects.all().order_by('title', 'id')
-    paginator = Paginator(objects, 5)
+    today = timezone.now().date()
+
+    objects = Post.objects.filter(draft=False, publish_date__lte=today)
+    if request.user.is_staff:
+        objects=Post.objects.all()
+
+
+    query = request.GET.get('q')
+    if query:
+        objects = objects.filter(
+            Q(title__icontains=query)|
+            Q(content__icontains=query)|
+            Q(author__first_name__icontains=query)|
+            Q(author__last_name__icontains=query)
+            ).distinct()
+
+    paginator = Paginator(objects, 4)
 
     number = request.GET.get('page')
 
@@ -68,13 +85,48 @@ def post_list(request):
 
     context = {
         "post_items": objects,
+        "today":today,
     }
     return render(request, "list.html", context)
 
 def post_detail(request, post_slug):
+    today = timezone.now().date()
     item = get_object_or_404(Post, slug=post_slug)
+
+    if not request.user.is_staff:
+        if item.draft or item.publish_date > today:
+            raise Http404
+
+    if request.user.is_authenticated():
+        if Like.objects.filter(post=item, user=request.user).exists():
+            liked = True
+        else:
+            liked = False
+
+    like_count = item.like_set.count()
+
     context = {
         "item": item,
+        "liked": liked,
+        "like_count": like_count,
     }
     return render(request, "detail.html", context)
 
+
+def like_button(request, post_id):
+    post_object = Post.objects.get(id=post_id)
+
+    like, created = Like.objects.get_or_create(user=request.user, post=post_object)
+
+    if created:
+        action = "like"
+    else:
+        like.delete()
+        action = "unlike"
+
+    like_count = post_object.like_set.count()
+    response = {
+        "like_count":like_count,
+        "action":action,
+    }
+    return JsonResponse(response, safe=False)

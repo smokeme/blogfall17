@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^delete/(?P<post_slug>[-\w]+)/$', views.post_delete, name="delete"),
     url(r'^random/$', views.random, name="random"),
 
+    url(r'^like_button/(?P<post_id>\d+)/$', views.like_button, name="like_button"),
+
 ]
