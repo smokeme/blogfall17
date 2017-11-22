@@ -12,5 +12,8 @@ urlpatterns = [
     url(r'^random/$', views.random, name="random"),
 
     url(r'^like_button/(?P<post_id>\d+)/$', views.like_button, name="like_button"),
+    url(r'^signup/$', views.usersignup, name="signup"),
+    url(r'^login/$', views.userlogin, name="login"),
+    url(r'^logout/$', views.userlogout, name="logout"),
 
 ]

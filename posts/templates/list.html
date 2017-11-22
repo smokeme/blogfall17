@@ -7,13 +7,6 @@
 	
 	<div class="jumbotron">
 		<h1 class="display-3">These are my posts!</h1>
-			<a class="btn btn-primary btn-lg" href="{% url 'more:create' %}" role="button">Create</a>
-			<br><br>
-			<form class="form-group" action="{% url 'more:list' %}" method="GET">
-				<input class="textinput textInput form-control" type="text" name="q" placeholder="Search..." value="{{request.GET.q}}">
-				<input class="btn btn-primary" type="submit" value="Search">
-			</form>
-			<p></p>
 	</div>
 	
 	<div class="row">
