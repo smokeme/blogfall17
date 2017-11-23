@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^more/', include('posts.urls', namespace="more")),
     url(r'^comments/', include('django_comments.urls')),
+    url(r'^googly/', include('googly.urls', namespace="googly")),
 
 ]
 
