@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     'googly',
     'gitty',
     'twitty',
+    'api',
 
     'crispy_forms',
     'django_comments',
+    'rest_framework',
 
     'allauth',
     'allauth.account',
