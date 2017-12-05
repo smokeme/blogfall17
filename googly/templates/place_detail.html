@@ -26,6 +26,7 @@
       "https://www.google.com/maps/embed/v1/directions?key={{map}}&origin="+lat+","+lng+"&destination={{response.result.geometry.location.lat}},{{response.result.geometry.location.lng}}"
       )
   }
+  
   navigator.geolocation.getCurrentPosition(function(position) {
     zahra_wants_to_change_the_name(position.coords.latitude, position.coords.longitude);
   });

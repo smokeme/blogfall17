@@ -5,6 +5,7 @@ import requests
 def place_text_search(request):
 	key = "AIzaSyA05I_z7AyQVoCvQLEabCDc2zF-FYCsMsw"
 	query = request.GET.get('query', 'Bank')
+	# url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+query+"&region=kw&key="+key
 	url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&region=kw&key=%s"%(query, key)
 
 	next_page = request.GET.get('nextpage')
